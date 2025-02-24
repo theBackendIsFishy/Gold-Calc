@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gold Jewelry Making Charge Calculator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-r from-yellow-500 to-orange-500 text-white flex flex-col items-center min-h-screen p-4">
+    
+    <nav class="w-full bg-gradient-to-r from-yellow-500 to-orange-500 text-white p-4 text-center font-bold text-lg flex justify-around">
+        <a href="index.html" class="hover:underline">Gold Jewelry Price</a>
+        <a href="making.html" class="hover:underline">Making Charge</a>
+    </nav>
+    
+    <div class="w-full max-w-md bg-white bg-opacity-20 p-6 rounded-lg shadow-lg">
+        <h2 class="text-2xl font-bold text-center mb-4">Gold Jewelry Making Charge Calculator</h2>
+        
+        <div class="space-y-2">
+            <label class="block">Gold Rate per 1 gram:</label>
+            <input type="number" id="goldRate" value="8700" class="w-full p-2 rounded text-black">
+            
+            <label class="block">Gross Weight:</label>
+            <input type="number" id="grossWeight" value="00" class="w-full p-2 rounded text-black">
+            
+            <label class="block">Stone Weight:</label>
+            <input type="number" id="stoneWeight"  value="00" class="w-full p-2 rounded text-black">
+            
+            <label class="block">Stone Rate:</label>
+            <input type="number" id="stoneRate" value="00" class="w-full p-2 rounded text-black">
+            
+            <label class="block">Total Price (Including GST):</label>
+            <input type="number" id="totalPrice" class="w-full p-2 rounded text-black">
+        </div>
+        
+        <button onclick="calculateMakingCharge()" class="mt-4 w-full bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-2 rounded">Calculate</button>
+        
+        <div id="result" class="mt-4 p-4 border border-white rounded bg-white text-black"></div>
+        
+        <a href="index.html" class="block text-center mt-4 text-white underline">Back to Gold Price Calculator</a>
+    </div>
+    
+    <div class="w-full max-w-md bg-white p-6 rounded-lg shadow-lg mt-6 text-black">
+        <h3 class="text-xl font-bold text-center mb-4">How to Use</h3>
+        <ul class="list-disc pl-6">
+            <li>Enter the gold rate per gram.</li>
+            <li>Input the gross weight of the jewelry.</li>
+            <li>Enter any stone weight and stone rate.</li>
+            <li>Provide the total jewelry price including GST.</li>
+            <li>Click 'Calculate' to find the making charge and percentage.</li>
+        </ul>
+    </div>
+    
+    <script>
+        function calculateMakingCharge() {
+            let goldRate = parseFloat(document.getElementById("goldRate").value);
+            let grossWeight = parseFloat(document.getElementById("grossWeight").value);
+            let stoneWeight = parseFloat(document.getElementById("stoneWeight").value);
+            let stoneRate = parseFloat(document.getElementById("stoneRate").value);
+            let totalPrice = parseFloat(document.getElementById("totalPrice").value);
+            let gstPercent = 3;
+
+            let priceWithoutGST = totalPrice * (100 / (100 + gstPercent));
+            let netPrice = priceWithoutGST - stoneRate;
+            let netWeight = grossWeight - stoneWeight;
+            let goldValue = netWeight * goldRate;
+            let makingCharge = netPrice - goldValue;
+            let makingChargePercent = (makingCharge / goldValue) * 100;
+
+            document.getElementById("result").innerHTML = `
+                <h3 class='text-lg font-bold'>Making Charge Summary</h3>
+                <p>Gold Rate: ₹${goldRate.toFixed(2)}</p>
+                <p>Gold Value: ₹${goldValue.toFixed(2)}</p>
+                <p>Making Charge: ₹${makingCharge.toFixed(2)}</p>
+                <p>Making Charge Percentage: ${makingChargePercent.toFixed(2)}%</p>
+            `;
+        }
+    </script>
+</body>
+</html>

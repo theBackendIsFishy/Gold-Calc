@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gold Price Calculator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-r from-yellow-500 to-orange-500 text-white flex flex-col items-center min-h-screen p-4">
+    
+    <nav class="w-full bg-gradient-to-r from-yellow-500 to-orange-500 text-white p-4 text-center font-bold text-lg flex justify-around">
+        <a href="index.html" class="hover:underline">Gold Jewelry Price</a>
+        <a href="making.html" class="hover:underline">Making Charge</a>
+    </nav>
+    
+    <div class="w-full max-w-md bg-white bg-opacity-20 p-6 rounded-lg shadow-lg">
+        <h2 class="text-2xl font-bold text-center mb-4">Gold Jewelry Price Calculator</h2>
+        
+        <div class="space-y-2">
+            <label class="block">Gold Rate per 10 grams:</label>
+            <input type="number" id="goldRate" value="87000" class="w-full p-2 rounded text-black">
+            
+            <label class="block">Select Gold Carat:</label>
+            <select id="goldCarat" class="w-full p-2 rounded text-black">
+                <option value="24">24K</option>
+                <option value="22">22K</option>
+                <option value="20">20K</option>
+                <option value="18">18K</option>
+                <option value="14">14K</option>
+                <option value="9">9K</option>
+            </select>
+            
+            <label class="block">Gross Weight:</label>
+            <input type="number" id="grossWeight" value="00" class="w-full p-2 rounded text-black">
+            
+            <label class="block">Stone Weight:</label>
+            <input type="number" id="stoneWeight" value="00" class="w-full p-2 rounded text-black">
+            
+            <label class="block">Stone Rate:</label>
+            <input type="number" id="stoneRate"value="00" class="w-full p-2 rounded text-black">
+            
+            <label class="block">Making Charge (%):</label>
+            <input type="number" id="makingCharge" value="18" class="w-full p-2 rounded text-black">
+            
+            <label class="block">Discount:</label>
+            <input type="number" id="discount" value="0" class="w-full p-2 rounded text-black">
+            
+            <label class="block">Budget:</label>
+            <input type="number" id="budget" value="0" class="w-full p-2 rounded text-black">
+        </div>
+        
+        <button onclick="calculatePrice()" class="mt-4 w-full bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-2 rounded">Calculate</button>
+        
+        <div id="result" class="mt-4 p-4 border border-black rounded bg-white text-black"></div>
+        
+        <div class="mt-6 p-4 bg-white text-black rounded shadow">
+            <h3 class="font-bold">How to Use:</h3>
+            <ol class="list-decimal list-inside">
+                <li>Enter the current gold rate per 10 grams.</li>
+                <li>Select the gold carat from the dropdown.</li>
+                <li>Enter the gross weight of the jewelry.</li>
+                <li>Enter the stone weight and stone rate (if applicable).</li>
+                <li>Provide the making charge percentage.</li>
+                <li>Enter any discount amount if applicable.</li>
+                <li>Set a budget to compare against the calculated price.</li>
+                <li>Click the "Calculate" button to get the final price breakdown.</li>
+            </ol>
+        </div>
+    </div>
+
+    <script>
+        function calculatePrice() {
+            let goldRate = parseFloat(document.getElementById("goldRate").value);
+            let goldCarat = parseFloat(document.getElementById("goldCarat").value);
+            let grossWeight = parseFloat(document.getElementById("grossWeight").value);
+            let stoneWeight = parseFloat(document.getElementById("stoneWeight").value);
+            let stoneRate = parseFloat(document.getElementById("stoneRate").value);
+            let makingChargePercent = parseFloat(document.getElementById("makingCharge").value);
+            let discount = parseFloat(document.getElementById("discount").value);
+            let budget = parseFloat(document.getElementById("budget").value);
+            let gstPercent = 3;
+            
+            let goldCaratRates = {
+                24: ((goldRate / 10) * 99.9) / 100,
+                22: ((goldRate / 10) * 91.6) / 100,
+                20: ((goldRate / 10) * 83.3) / 100,
+                18: ((goldRate / 10) * 75) / 100,
+                14: ((goldRate / 10) * 58.3) / 100,
+                9: ((goldRate / 10) * 37.5) / 100,
+            };
+            let adjustedGoldRate = goldCaratRates[goldCarat];
+            
+            let netGoldWeight = grossWeight - stoneWeight;
+            let goldPrice = netGoldWeight * adjustedGoldRate;
+            let makingCharge = (goldPrice * makingChargePercent) / 100;
+            let totalBeforeGST = goldPrice + makingCharge + stoneRate - discount;
+            let gst = (gstPercent / 100) * totalBeforeGST;
+            let totalPrice = totalBeforeGST + gst;
+            
+            let budgetDifference = budget - totalPrice;
+            let budgetMessage = budget > 0 ? (budgetDifference >= 0 
+                ? `You are within budget. Remaining: ₹${budgetDifference.toFixed(2)}` 
+                : `You need ₹${Math.abs(budgetDifference).toFixed(2)} more.`) 
+                : "Budget not set";
+            
+            document.getElementById("result").innerHTML = `
+                <h3 class='text-lg font-bold'>Bill Summary</h3>
+                <p>Gold Carat: ${goldCarat}K</p>
+                <p>Gold Rate Adjusted: ₹${adjustedGoldRate.toFixed(2)}</p>
+                <p>Gold Price: ₹${goldPrice.toFixed(2)}</p>
+                <p>Making Charge: ₹${makingCharge.toFixed(2)}</p>
+                <p>Stone Price: ₹${stoneRate.toFixed(2)}</p>
+                <p>Discount: ₹${discount.toFixed(2)}</p>
+                <p>GST (3%): ₹${gst.toFixed(2)}</p>
+                <h4>Total Price: ₹${totalPrice.toFixed(2)}</h4>
+                <p><strong>${budgetMessage}</strong></p>
+            `;
+        }
+    </script>
+</body>
+</html>
