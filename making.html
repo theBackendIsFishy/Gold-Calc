@@ -18,20 +18,20 @@
         <h2 class="text-2xl font-bold text-center mb-4">Gold Jewelry Making Charge Calculator</h2>
         
         <div class="space-y-2">
-            <label class="block">Gold Rate per 1 gram:</label>
+            <label class="block">Enter Gold Rate per 1 gram:</label>
             <input type="number" id="goldRate" value="8700" class="w-full p-2 rounded text-black">
             
-            <label class="block">Gross Weight:</label>
-            <input type="number" id="grossWeight" value="00" class="w-full p-2 rounded text-black">
+            <label class="block">Gross Weight with stone in grams:</label>
+            <input type="number" id="grossWeight" value="1.0" class="w-full p-2 rounded text-black">
             
-            <label class="block">Stone Weight:</label>
-            <input type="number" id="stoneWeight"  value="00" class="w-full p-2 rounded text-black">
+            <label class="block">Stone Weight in grams:</label>
+            <input type="number" id="stoneWeight"  value="0.0" class="w-full p-2 rounded text-black">
             
-            <label class="block">Stone Rate:</label>
-            <input type="number" id="stoneRate" value="00" class="w-full p-2 rounded text-black">
+            <label class="block">Stone Rate in ₹:</label>
+            <input type="number" id="stoneRate" value="0.0" class="w-full p-2 rounded text-black">
             
-            <label class="block">Total Price (Including GST):</label>
-            <input type="number" id="totalPrice" class="w-full p-2 rounded text-black">
+            <label class="block">Total Price (Including GST)in ₹:</label>
+            <input type="number" id="totalPrice" value="9300.0" class="w-full p-2 rounded text-black">
         </div>
         
         <button onclick="calculateMakingCharge()" class="mt-4 w-full bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-2 rounded">Calculate</button>
