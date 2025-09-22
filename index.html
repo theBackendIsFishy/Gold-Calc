@@ -79,6 +79,7 @@
             let discount = parseFloat(document.getElementById("discount").value);
             let budget = parseFloat(document.getElementById("budget").value);
             let gstPercent = 3;
+            let gstMakingPercent = 5;
             
             let goldCaratRates = {
                 24: ((goldRate / 10) * 99.9) / 100,
@@ -95,7 +96,8 @@
             let makingCharge = (goldPrice * makingChargePercent) / 100;
             let totalBeforeGST = goldPrice + makingCharge + stoneRate - discount;
             let gst = (gstPercent / 100) * totalBeforeGST;
-            let totalPrice = totalBeforeGST + gst;
+            let makingGst = (gstMakingPercent / 100) * makingCharge;
+            let totalPrice = totalBeforeGST + gst + makingGst;
             
             let budgetDifference = budget - totalPrice;
             let budgetMessage = budget > 0 ? (budgetDifference >= 0 
@@ -112,6 +114,7 @@
                 <p>Stone Price: ₹${stoneRate.toFixed(2)}</p>
                 <p>Discount: ₹${discount.toFixed(2)}</p>
                 <p>GST (3%): ₹${gst.toFixed(2)}</p>
+                <p>GST on Making Charges (5%):₹${makingGst.toFixed(2)}
                 <h4>Total Price: ₹${totalPrice.toFixed(2)}</h4>
                 <p><strong>${budgetMessage}</strong></p>
             `;
@@ -120,3 +123,4 @@
 </body>
 
 </html>
+
