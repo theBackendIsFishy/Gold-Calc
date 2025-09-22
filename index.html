@@ -97,7 +97,7 @@
             let totalBeforeGST = goldPrice  + stoneRate - discount;
             let gst = (gstPercent / 100) * totalBeforeGST;
             let makingGst = (gstMakingPercent / 100) * makingCharge;
-            let totalPrice = totalBeforeGST + gst + makingGst;
+            let totalPrice = totalBeforeGST + gst + makingGst + makingCharge;
             
             let budgetDifference = budget - totalPrice;
             let budgetMessage = budget > 0 ? (budgetDifference >= 0 
@@ -123,5 +123,6 @@
 </body>
 
 </html>
+
 
 
