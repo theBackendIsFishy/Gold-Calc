@@ -94,7 +94,7 @@
             let netGoldWeight = grossWeight - stoneWeight;
             let goldPrice = netGoldWeight * adjustedGoldRate;
             let makingCharge = (goldPrice * makingChargePercent) / 100;
-            let totalBeforeGST = goldPrice + makingCharge + stoneRate - discount;
+            let totalBeforeGST = goldPrice  + stoneRate - discount;
             let gst = (gstPercent / 100) * totalBeforeGST;
             let makingGst = (gstMakingPercent / 100) * makingCharge;
             let totalPrice = totalBeforeGST + gst + makingGst;
@@ -123,4 +123,5 @@
 </body>
 
 </html>
+
 
